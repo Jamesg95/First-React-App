@@ -26,7 +26,11 @@ import React from 'react';
                         <div key={comment.id} className='m-2'>
                             {comment.text}
                             <br />
-                            --{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                            --{comment.author}, {new Intl.DateTimeFormat('en-US', { 
+                                year: 'numeric', 
+                                month: 'short', 
+                                day: '2-digit'})
+                                .format(new Date(Date.parse(comment.date)))}
                         </div>
                     )}
                 </div>
