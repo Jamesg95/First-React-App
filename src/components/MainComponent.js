@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 
 const mapStatetoProps = state => {
   return {
-    campsite: state.campsites,
+    campsites: state.campsites,
     comments: state.comments,
     partners: state.partners,
     promotions: state.promotions
