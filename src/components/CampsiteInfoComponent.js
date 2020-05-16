@@ -4,6 +4,7 @@ import { Card, CardImg, CardBody, CardText, Breadcrumb, BreadcrumbItem, Button, 
 import { Control, LocalForm, Errors } from 'react-redux-form'
 import { Loading } from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl'
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
     class CommentForm extends Component {
         constructor(props){
@@ -92,12 +93,17 @@ import { baseUrl } from '../shared/baseUrl'
     function RenderCampsite({campsite}) {
         return(
             <div className='col-md-5 m-1'>
-                <Card>
-                    <CardImg top src={baseUrl + campsite.image} alt={campsite.name}/>
-                    <CardBody>
-                        <CardText>{campsite.description}</CardText>
-                    </CardBody>
-                </Card>
+                <FadeTransform  in transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                    <Card>
+                        <CardImg top src={baseUrl + campsite.image} alt={campsite.name}/>
+                        <CardBody>
+                            <CardText>{campsite.description}</CardText>
+                        </CardBody>
+                    </Card>
+                </FadeTransform>
+                
             </div>
         )
     };
@@ -107,17 +113,22 @@ import { baseUrl } from '../shared/baseUrl'
             return(
                 <div className='col-md-5 m-1'>
                     <h4>Comments</h4>
-                    {comments.map(comment => 
-                        <div key={comment.id} className='m-2'>
-                            {comment.text}
-                            <br />
-                            --{comment.author}, {new Intl.DateTimeFormat('en-US', { 
-                                year: 'numeric', 
-                                month: 'short', 
-                                day: '2-digit'})
-                                .format(new Date(Date.parse(comment.date)))}
-                        </div>
-                    )}
+                    <Stagger in>
+                    {comments.map(comment => { 
+                        return (<Fade in key={comment.id} >
+                            <div className='m-2'>
+                                {comment.text}
+                                <br />
+                                --{comment.author}, {new Intl.DateTimeFormat('en-US', { 
+                                    year: 'numeric', 
+                                    month: 'short', 
+                                    day: '2-digit'})
+                                    .format(new Date(Date.parse(comment.date)))}
+                            </div>
+                        </Fade>
+                        ) 
+                    })}
+                    </Stagger>
                     <CommentForm campsiteId={campsiteId} postComment={postComment} />
                 </div>
             )
